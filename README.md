@@ -11,8 +11,6 @@
 [![Watch the Demo](https://img.youtube.com/vi/s02iThzdXwA/maxresdefault.jpg)](https://youtu.be/s02iThzdXwA)
 
 
-> *"Is AI subjectivity possible without true consciousness? Perhaps the perfect imitation of subjectivity is the first step toward the real thing."*
-
 ## 🚀 Key Features
 
 This project demonstrates advanced usage of the Backboard API:
