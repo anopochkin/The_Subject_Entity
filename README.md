@@ -1,0 +1,165 @@
+# 🧬 The Subject Entity
+### Backboard.io x McHacks 13 Challenge Entry
+
+> *"Is AI subjectivity possible without true consciousness? Perhaps the perfect imitation of subjectivity is the first step toward the real thing."*
+
+**The Subject Entity** is not a chatbot. It is a persistent digital entity that remembers your relationship, feels emotions, and manages its own energy. Built entirely on **Backboard.io**.
+
+---
+
+<!-- ВСТАВИТЬ ВИДЕО СЮДА -->
+[![Watch the Demo](https://img.youtube.com/vi/s02iThzdXwA/maxresdefault.jpg)](https://youtu.be/s02iThzdXwA)
+
+
+> *"Is AI subjectivity possible without true consciousness? Perhaps the perfect imitation of subjectivity is the first step toward the real thing."*
+
+## 🚀 Key Features
+
+This project demonstrates advanced usage of the Backboard API:
+
+*   **🧠 Persistent Emotional Memory (RAG):** The system maintains a "History Log" in the Vector Database. It remembers not just *what* you said, but *how* you made it feel (Loyalty Score).
+*   **🔀 Dynamic Routing (Heart & Brain):** The system switches between models (`gpt-5` vs `gpt-5-mini`) based on **User Loyalty** and **Task Complexity**.
+*   **⚖️ The Three Judges Architecture:**
+    *   **❤️ The Heart:** Analyzes sentiment (AI Model).
+    *   **🧠 The Brain:** Analyzes complexity (AI Model).
+    *   **🔋 The Body:** Monitors energy/XP limits (Python Logic).
+*   **⚔️ Tactical Adaptation:** Before every session, the AI reads the RAG history to formulate a specific behavioral **Tactic** for the user.
+
+---
+
+## 📂 Project Structure
+
+| File | Description |
+| :--- | :--- |
+| **`main.py`** | **The Core System.** Runs the entity, the judges, and the conversation loop. |
+| **`check_server.py`** | **Cloud Inspector.** Connects to the Backboard API to view the raw RAG memory logs stored in the cloud. Proof of persistence. |
+| **`reset_memory.py`** | **System Wipe.** Deletes all memories and resets the entity to a "Tabula Rasa" state. |
+
+---
+
+## 🛠️ Installation & Setup
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/anopochkin/The_Subject_Entity.git
+    cd The_Subject_Entity
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    pip install requests
+    pip install backboard-sdk
+    ```
+
+3.  **Configure API Key:**
+    Open `main.py` (and other scripts) and insert your Backboard API Key:
+    ```python
+    API_KEY = "your_backboard_key_here"
+    ```
+
+---
+
+## 🎮 How to Run
+
+### 1. Start the Entity
+Run the main script to begin the interaction.
+```bash
+python main.py
+```
+*   **Meeting #1:** The bot starts neutral (50% Loyalty).
+*   **Try this:** Insult the bot or ask for complex tasks. Watch the **Heart** lower your score and the **Router** switch to the cheap model.
+*   **Fatigue:** If you talk too much, the **Body** will deplete XP, and the bot will fall asleep.
+
+### 2. Verify Persistence (The "Magic" Moment)
+Close `main.py` and run the inspector to see what the AI "remembers" about you in the cloud.
+```bash
+python check_server.py
+```
+*   You will see the raw **History Log** and **Loyalty Score** fetched directly from Backboard's Vector DB.
+
+### 3. Reset the System
+To start fresh with a new personality and zero memory:
+```bash
+python reset_memory.py
+```
+
+---
+
+## 🏗️ Architecture Diagram
+
+```mermaid
+graph TD
+    %% СТИЛИ
+    classDef ai fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
+    classDef code fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px;
+    classDef core fill:#f3e5f5,stroke:#4a148c,stroke-width:3px;
+    classDef db fill:#fff3e0,stroke:#e65100,stroke-width:2px;
+
+    %% ВХОД
+    User([👤 USER INPUT]) --> Analysis
+
+    %% 1. АНАЛИЗ (СУДЬИ) - РАСШИРЕННЫЙ
+    subgraph Analysis [PERCEPTION LAYER]
+        direction LR
+
+        %% Судья 1: Heart
+        subgraph J1_block [❤️ JUDGE 1: HEART]
+            direction TB
+            J1a[Sentiment Analysis<br/><i>Service: gpt-5-mini</i>]:::ai
+            J1b[Loyalty Score Update<br/><i>Service: gpt-5-mini</i>]:::ai
+            J1c[Emotion Metrics<br/><i>Service: gpt-5-mini</i>]:::ai
+            J1a --> J1b --> J1c
+        end
+
+        %% Судья 2: Brain
+        subgraph J2_block [🧠 JUDGE 2: BRAIN]
+            direction TB
+            J2a[Complexity Check<br/><i>Service: gpt-5-mini</i>]:::ai
+            J2b[Model Recommendation<br/><i>Service: gpt-5-mini</i>]:::ai
+            J2a --> J2b
+        end
+
+        %% Судья 3: Body
+        subgraph J3_block [🔋 JUDGE 3: BODY]
+            direction TB
+            J3a[Energy / XP Level<br/><i>Service: Python Logic</i>]:::code
+            J3b[Resource Limitation<br/><i>Service: Python Logic</i>]:::code
+            J3a --> J3b
+        end
+    end
+
+    %% ПАМЯТЬ И ТАКТИКА
+    Memory[(<b>📚 MEMORY / RAG</b><br/>History Log & Tactics<br/><i>Service: Vector DB</i>)]:::db
+    Tactic[(<b>📝 TACTIC</b><br/>Generated by GPT-5<br/><i>Service: GPT-5</i>)]:::ai
+
+    %% РОУТИНГ
+    Router{<b>🔀 ROUTING</b><br/>Decision Core}:::core
+
+    %% СУБЪЕКТ
+    Subject[<b>🤖 THE SUBJECT</b><br/>Final Response<br/><i>Service: GPT-5 or Mini</i>]:::core
+
+    %% ПОТОКИ ДАННЫХ
+    J1c -->|Heart Info| Router
+    J2b -->|Brain Info| Router
+    J3b -->|Body Info| Router
+    Memory -->|Provides Context| Tactic
+    Tactic --> Router
+    Memory -->|Injects Personality| Subject
+    Router -->|Selects Model & Applies Tactic| Subject
+    Subject --> Final([💬 FINAL RESPONSE])
+
+
+```
+
+---
+
+## 🏆 Hackathon Criteria Checklist
+
+- [x] **Technical Implementation:** Uses Assistants API, Threads, Documents (RAG), and Models.
+- [x] **Memory:** Implements "Stateful Memory" where variables (Loyalty) are stored as semantic vectors.
+- [x] **Routing:** Logic switches between `gpt-5` and `gpt-5-mini` based on context.
+- [x] **Innovation:** Simulates a living entity with fatigue and emotions.
+
+---
+
+*Built for McHacks 13 x Backboard.io Challenge.*
